@@ -1,6 +1,8 @@
 /** 
   @alexandre256bits
   02/04/2024
+  ẍ = sin (x)  ==>  dt = dx / sin(x) ==>  dx = dt * sin(x) 
+  interpretando uma equação diferencial ẍ = sin(x) como um campo vetorial  
 */
 
 
@@ -10,22 +12,16 @@
 #include "df.h"
 
 float N, x0, t0;
-float a = M_PI/4; 
-float b =  M_PI;
+float a = 0; 
+float b = 3.99;
 float h = pow(10,-2 );
 
 int main(void) {
-   N = (b - a) / h;   
+   N = (b - a) / h;
+
    float dx[abs(N)]; 
    float dt[abs(N)];
    float k1, k2;
-
-   FILE *fd;
-   fd = fopen("dataset.dat", "w+");
-   if (fd == NULL) {
-      printf("problema com arquivo.\n");
-      return -1;
-   }
    x0 = 0;
    t0 = a;
    dx[0] = x0;
@@ -38,9 +34,9 @@ int main(void) {
       dx[i+1] = dx[i] + (h/2)*(k1+k2);
    }
 
-   for (int i=0; i < abs(N); i++) 
-     fprintf(fd, "%f	%f\n", dx[i], dt[i]);
-   fclose(fd);
+   for (int i=0; i < abs(N); i++)
+      printf("dx: %f - dt: %f\n", dx[i], dt[i]);
+
    return 0;
 }
 
@@ -49,3 +45,5 @@ float df(float x, float t){
    dx = sin(x) * t;
    return dx;
 }
+
+
